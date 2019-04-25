@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoForm from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList';
+import './components/TodoComponents/Todo.css';
 
 const todo=[
   
@@ -28,7 +29,6 @@ constructor(){
     newTodo: {
       task:"",
       id: "",
-      completed: false,
     }
   };
 }
@@ -38,7 +38,7 @@ handleChanges = event => {
     newTodo: {
       ...this.state.newTodo,
       [event.target.name]: event.target.value,
-      completed: !this.state.completed,
+      // completed: !this.state.completed,
     }
   });
 }
@@ -49,34 +49,48 @@ addTodo = event => {
     todoList: [...this.state.todoList, this.state.newTodo],
     newTodo:{
       task:"",
-      id: "",
-      completed: false,
+      id: Date.now(),
+      // completed: false,
     }
   })
 }
 
-completeCheck = event => {
-
+completeCheck = id => {
+  console.log(id);
   this.setState({ 
-  complete : {...this.state.completed,
-    [event.target.completed]: event.target.value,
-    completed: this.state.completed.check,
-  }
-});
+    todoList: this.state.todoList.map(todo => 
+      (todo.id === id ? {...todo, completed: !todo.completed} : todo ),
+    )});
+  
+}
+
+removeCompleted = () => {
+  const newTodoCompleted = this.state.todoList.filter(todo => {
+    return !todo.completed;
+  });
+  this.setState({
+    todoList: newTodoCompleted
+  });
 }
 
   render() {
 
     return (
-      <div>
-        <h2>Welcome to your Todo App!</h2>
+      <div className="App">
+        <h2 className="header">Welcome to your Todo App!</h2>
 
-        <TodoList todoList={this.state.todoList} />
+        <TodoList 
+        todoList={this.state.todoList} 
+        completeCheck={this.completeCheck}
+        />
         <TodoForm 
+           
             todo={this.state.newTodo} 
             handleChanges={this.handleChanges} 
             addTodo={this.addTodo}
+            removeCompleted={this.removeCompleted}
         />
+        <button onClick={this.removeCompleted}>Clear Completed</button>
       </div>
     );
   }
