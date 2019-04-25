@@ -28,7 +28,7 @@ constructor(){
     newTodo: {
       task:"",
       id: "",
-      completed: "",
+      completed: false,
     }
   };
 }
@@ -37,7 +37,8 @@ handleChanges = event => {
   this.setState({
     newTodo: {
       ...this.state.newTodo,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      completed: !this.state.completed,
     }
   });
 }
@@ -49,12 +50,23 @@ addTodo = event => {
     newTodo:{
       task:"",
       id: "",
-      completed: "",
+      completed: false,
     }
   })
 }
 
+completeCheck = event => {
+
+  this.setState({ 
+  complete : {...this.state.completed,
+    [event.target.completed]: event.target.value,
+    completed: this.state.completed.check,
+  }
+});
+}
+
   render() {
+
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>

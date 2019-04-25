@@ -9,7 +9,7 @@ const TodoForm = props => {
           onChange={event => props.handleChanges(event)}
           name="task"
           />
-        <input 
+        {/* <input 
           placeholder="ID"
           value={props.todo.id}
           onChange={event => props.handleChanges(event)}
@@ -20,8 +20,9 @@ const TodoForm = props => {
           value={props.todo.completed}
           onChange={event => props.handleChanges(event)}
           name="completed"
-          />
-           <button>Update List</button>
+          /> */}
+           <button>Add Todo</button>
+           <button>Clear Completed</button>
         </form>
     );
 };
